@@ -1,5 +1,6 @@
 from playwright.sync_api import sync_playwright
 from datetime import datetime
+from zoneinfo import ZoneInfo
 import time
 import os
 
@@ -62,8 +63,8 @@ def download_padel_grids(sites):
 
         browser.close()
 
-# 1. Get today's date in the exact format Playtomic expects (YYYY-MM-DD)
-today_str = datetime.now().strftime("%Y-%m-%d")
+# 1. Get today's date in the exact format Playtomic expects (YYYY-MM-DD), locked to Sydney time
+today_str = datetime.now(ZoneInfo("Australia/Sydney")).strftime("%Y-%m-%d")
 
 # 2. List your base URLs without the date attached
 base_sites = [
