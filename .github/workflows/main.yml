@@ -1,0 +1,37 @@
+name: Padel Grid Scraper
+
+on:
+  schedule:
+    # 5:50 AM ACDT (19:20 UTC previous day)
+    - cron: '20 19 * * *'
+    # 3:30 PM ACDT (05:00 UTC)
+    - cron: '0 5 * * *'
+  workflow_dispatch: 
+
+jobs:
+  scrape-grids:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Playwright and Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install playwright
+          playwright install chromium
+
+      - name: Run Script
+        run: python "Script 2.py"
+
+      - name: Upload Grids Zip File
+        uses: actions/upload-artifact@v4
+        with:
+          name: padel-grids-output
+          path: ./peak_padel_research
